@@ -79,16 +79,17 @@ select id from t order by id desc limit 1;
 * 逻辑算子的物理实现
 * 是否将算子下推到存储层
 
-例子：索引的选择
-选择代价最低的索引。下面的查询语句：
+例子：索引的选择选择代价最低的索引。下面的查询语句：
+```sql
 select * from t where t.a=1 and  t.b=2 and t.c>3;  
+```
 表中的索引如下：
-idx_a(a)
-idx_b_c(b,c)
+* idx_a(a)
+* idx_b_c(b,c)
 可选的执行计划：
-table scan(+filter)
-index scan(idx_a) + table scan(+filter)
-index scan(idx_b_c) + table scan(+filter)
+* table scan(+filter)
+* index scan(idx_a) + table scan(+filter)
+* index scan(idx_b_c) + table scan(+filter)
 优化器根据执行计划中的执行效率，选择代价最小的方案执行以获得最优的查询效率。
 
 ## 统计信息的收集与维护
